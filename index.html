@@ -4,41 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TCD HD</title>
-    
-    <link href="https://vjs.zencdn.net/7.8.4/video-js.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.0.0/animate.min.css"/>
+  </head>
 
-  
-</head>
-<body style="background: black">
+<body style=" background: black; display: flex; flex-direction: column; 
+align-items: center; justify-content: center;">
+
+
+    <div class="modal" id="modal">
+      <h3>Activar Volumen...</h3>
+      <br>
+      <br>
+      <br>
+      <br>
+      <img src="./images/mano4.png" width="30%" class="animate__animated" id="img">
+    </div>
+
+    <div id="logo" style="background: cadetblue; display: flex; z-index: 0 !important;
+    flex-direction: column; justify-content: center; align-items: center;" class="area">
+        <img src="./images/logo.png" width="50%">
+    </div>
+
     
-    
+    <div id="cont-video" style=" width: 95%; padding: 3%;">
 
-    
-
-    <div class="container-juan">
-
-        <div class="area" id="logo" style="background: cadetblue; margin-bottom: 3%; text-align: center;">
-            <img src="./images/logo.png" alt="" width="50%" >
-        </div>
-
-        <div class="embed-container">
-            <iframe id="iframe" class="" 
-                src="https://arcast.net/tcd"  width="560" height="315"
-                frameborder="0" allowfullscreen="allowfullscreen"  >
+       <div class="embed-container" id="video">
+           <iframe id="iframe"
+                src="https://arcast.net/tcd"  
+                frameborder="0" controls audio  >
             </iframe>
         </div>
-        
-        
-        <div class="area font white" id="logo" style="background: cadetblue; margin-top: 3%; text-align: center;">
-            <p style="font-size: 70%; margin-top: 10%;">Chaco - Argentina</p>
-            <p style="margin-top: 30%; font-size:10%;">Developed by BP-Code</p>
-        </div>
-    
+
     </div>
     
     
 
+
+    <div id="logo2" class="area white" style=" background: cadetblue; text-align: center; height: 100%; z-index: 0 !important;">
+        <p style="font-size: 70%; margin-top: 15%;" class="font">Chaco - Argentina</p>
+        <p style="font-size:10%; margin-top: 25%; font-size: 60%;">Developed by BP-Code</p>
+    </div>
     
     
 </body>
@@ -49,7 +55,6 @@
     @font-face {
             font-family: 'STEPS';
             src: url('./fonts/STEPS-ItalicTracked.ttf');
-                 
     }
 
     body, html {
@@ -58,35 +63,11 @@
     .bt{
         border: 1px solid blue;
     }
-    .bt2{
-        border: 1px solid green;
-    }
-
-    .container-juan{
-        /*width: 100%;*/
-        /*height: 100%;*/
-        display: flex;
-        flex-direction: column;
-        min-height:100%;
-    }
-
     .area{
-       /* height: 30%;*/
-        /*display: flex;
-        align-items: center;
-        justify-content: center;*/
         flex-grow: 1;
         flex-basis: 0;
-        /*flex-direction: column;*/
-        /*display: flex;
-        flex: 1;*/
+        width: 100%;
     }
-    /*.frame_{
-        height: 32%;
-    }
-    .frame2_{
-        height: 315px;
-    }*/
     .white{
         color: white;
     }
@@ -95,58 +76,81 @@
     }
 
     .embed-container {
-    position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
-    overflow: hidden;
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+    }
     
-}
-.embed-container iframe {
-    position: absolute;
-    top:0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
+    .embed-container iframe {
+      position: absolute;
+      top:0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
     
+    .modal {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.9);
+      opacity: 1;
+      display:flex;
+      z-index: 10001;
+      visibility:visible;
+      transform: scale(1.1);
+      transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+      color: white;
+
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
 </style>
 
 <script>
-var grados = 0;
+    var grados = 0;
+    var modal = document.getElementById('modal')
+    var modal2 = document.getElementById('modal2')
+    var img = document.getElementById('img')
+    //window.addEventListener('scroll', disableScroll);
+    var intervalID = window.setInterval(ponerEfecto, 2000);
+    
+    
+  
+  
+  window.addEventListener('click', function(event){
+    quitarAviso();
+  }); 
 
-    window.addEventListener("orientationchange", function(event) {
-  if ( event.target.screen.orientation.angle === 0){
+  window.addEventListener("orientationchange", function(event) {
+
+    if ( event.target.screen.orientation.angle === 0){
       grados = 0
-      //document.getElementById('iframe').classList.remove('frame2_')
-      //document.getElementById('iframe').classList.add('frame_')
-
       document.getElementById('logo').removeAttribute('hidden')
-      //document.getElementById('logo2').removeAttribute('hidden')
-      //document.getElementById('iframe').setAttribute('width:', width_)
-      //document.getElementById('iframe').setAttribute('height:', height_)
-      console.log(screen.width,screen.height)
-  }
-  if ( event.target.screen.orientation.angle === 90){
-      grados = 90
-      //document.getElementById('iframe').classList.remove('frame_')
-      //document.getElementById('iframe').classList.add('frame2_')
-      document.getElementById('logo').setAttribute('hidden',true)
-      //document.getElementById('logo2').setAttribute('hidden',true)
+      document.getElementById('logo2').removeAttribute('hidden')           
+    }
 
-      //document.getElementById('iframe').removeAttribute('width')
-      //document.getElementById('iframe').removeAttribute('height')
-      //document.getElementById('bo').setAttribute('height:', '0%')
-      //document.getElementById('iframe').setAttribute('width:', width_)
-      //document.getElementById('iframe').setAttribute('height:', height_)
-      console.log(screen.width,screen.height)
-  }
+    if ( event.target.screen.orientation.angle === 90 || event.target.screen.orientation.angle === 270){
+      grados = 90
+      quitarAviso() 
+      document.getElementById('logo').setAttribute('hidden',true)
+      document.getElementById('logo2').setAttribute('hidden',true)
+      
+    }
 });
 
 
-function width_(){
-    return screen.width - 5
+
+
+function ponerEfecto() {
+  img.classList.toggle('animate__shakeY')
 }
-function height_(){
-    return '100%'//screen.height - 5
+
+function quitarAviso() {
+  modal.style.visibility = 'hidden'
 }
 </script>
